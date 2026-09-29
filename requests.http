@@ -1,0 +1,37 @@
+### Create an appointment
+POST http://localhost:8080/api/appointments
+Content-Type: application/json
+
+{
+  "customerName": "Ali Khan",
+  "customerEmail": "ali@example.com",
+  "startTime": "2026-10-01T10:00:00",
+  "endTime": "2026-10-01T11:00:00"
+}
+
+### Get all appointments
+GET http://localhost:8080/api/appointments
+### Should be 409 (double booking: overlaps 10:00-11:00)
+POST http://localhost:8080/api/appointments
+Content-Type: application/json
+
+{
+  "customerName": "Sara Ahmed",
+  "customerEmail": "sara@example.com",
+  "startTime": "2026-10-01T10:30:00",
+  "endTime": "2026-10-01T11:30:00"
+}
+
+### Should be 404
+GET http://localhost:8080/api/appointments/999
+
+### Should be 400 (blank name, bad email)
+POST http://localhost:8080/api/appointments
+Content-Type: application/json
+
+{
+  "customerName": "",
+  "customerEmail": "not-an-email",
+  "startTime": "2026-10-02T10:00:00",
+  "endTime": "2026-10-02T11:00:00"
+}
